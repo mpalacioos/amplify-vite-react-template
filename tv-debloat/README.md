@@ -10,6 +10,12 @@ Se ejecutan desde un ordenador en la **misma red Wi‑Fi** que el TV.
    Si no: `./debloat.sh 192.168.1.74:39937`
 4. Acepta el aviso de depuración en la pantalla del TV.
 
+**TD Systems y otras marcas poco comunes:** el script solo incluye los paquetes de Google
+y de las marcas principales. Ejecuta primero `./debloat.sh 192.168.1.74:39937 --list` para guardar
+el inventario de paquetes del TV y revisar qué apps del fabricante sobran. No desactives nada que
+contenga `tvcenter`, `tvinput`, `tuner`, `hdmi` o `settings`: es lo que hace funcionar la TDT, las
+entradas HDMI y los ajustes.
+
 Para una interfaz más ligera, descarga un launcher (Projectivy Launcher, FLauncher…) como
 `launcher.apk` en esta carpeta antes de ejecutar el script.
 

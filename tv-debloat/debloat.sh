@@ -19,6 +19,18 @@ ADB=(adb -s "$TARGET")
 
 echo "Dispositivo: $("${ADB[@]}" shell getprop ro.product.manufacturer) $("${ADB[@]}" shell getprop ro.product.model)"
 
+# Modo inventario: guarda todos los paquetes del TV para revisar qué es bloatware del fabricante.
+if [[ "${2:-}" == "--list" ]]; then
+  OUT="$(dirname "$0")/packages-$(date +%Y%m%d).txt"
+  {
+    echo "# $("${ADB[@]}" shell getprop ro.product.manufacturer) $("${ADB[@]}" shell getprop ro.product.model) Android $("${ADB[@]}" shell getprop ro.build.version.release)"
+    echo "## Sistema"; "${ADB[@]}" shell pm list packages -s | sed 's/^package://' | sort
+    echo "## Instaladas"; "${ADB[@]}" shell pm list packages -3 | sed 's/^package://' | sort
+  } | tr -d '\r' >"$OUT"
+  echo "Inventario guardado en $OUT"
+  exit 0
+fi
+
 # Bloatware habitual en Android TV / Google TV y marcas (TCL, Xiaomi, Hisense, Philips, Sony).
 # Solo se desactiva lo que exista en el TV.
 BLOAT=(
